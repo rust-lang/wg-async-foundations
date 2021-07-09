@@ -95,6 +95,7 @@
       - [How to represent the `AsyncFn` traits?](./vision/harmonic/unresolved_questions/async_fn.md)
       - [How best to integrate voluntary cancellation?](./vision/harmonic/unresolved_questions/cancellation.md)
       - [Extend stdlib to permit portable async without generics?](./vision/harmonic/unresolved_questions/portable_without_generics.md)
+      - [To await or not to await?](./vision/harmonic/unresolved_questions/await_or_not.md)
     - [Use async fn everywhere](./vision/harmonic/async_fn_everywhere.md)
       - [Type alias impl trait](./vision/harmonic/async_fn_everywhere/type_alias_impl_trait.md)
       - [Generic associated types](./vision/harmonic/async_fn_everywhere/generic_associated_types.md)
