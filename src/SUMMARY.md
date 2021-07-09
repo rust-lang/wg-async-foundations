@@ -90,7 +90,7 @@
     - [Barbara wants async read write](./vision/shiny_future/barbara_wants_async_rw.md)
     - [Barbara wants async tracing](./vision/shiny_future/barbara_wants_async_tracing.md)
   - [🌈 Harmonic synthesis](./vision/harmonic.md)
-    - [How it feels to use async Rust](./vision/harmonic/how_it_feels.md)
+    - [How using async Rust ought to feel](./vision/harmonic/how_it_feels.md)
     - [Major unresolved questions or controversies](./vision/harmonic/unresolved_questions.md)
       - [How to represent the `AsyncFn` traits?](./vision/harmonic/unresolved_questions/async_fn.md)
       - [How best to integrate voluntary cancellation?](./vision/harmonic/unresolved_questions/cancellation.md)
