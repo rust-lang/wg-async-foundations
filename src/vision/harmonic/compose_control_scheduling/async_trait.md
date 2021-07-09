@@ -24,7 +24,7 @@ trait Async {
     unsafe fn poll(
         &mut self,
         context: &mut core::task::Context<'_>,
-    ) -> core::task::Ready<Self::Output>;
+    ) -> core::task::Poll<Self::Output>;
 }
 ```
 
