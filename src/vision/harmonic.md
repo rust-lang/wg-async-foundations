@@ -22,10 +22,10 @@ This page is a **work in progress**. It represents a complete vision for where w
 | [Easily produce iterators]                      | 🌤️        |
 | [Getting started in async Rust is easy]         | 🌤️        |
 
-[use async fn everywhere]: ./vision/harmonic/async_fn_everywhere.md
-[easily compose, control scheduling]: ./vision/harmonic/compose_control_scheduling.md
-[generic code that is portable across runtimes]: ./vision/harmonic/portable_generic_code.md
-[use current runtime without generics]: ./vision/harmonic/use_current_runtime.md
-[easy to understand what is happening]: ./vision/harmonic/easy_to_understand.md
-[easily produce iterators]: ./vision/harmonic/easily_produce_iterators.md
-[getting started in async rust is easy]: ./vision/harmonic/getting_started.md
+[use async fn everywhere]: ./async_fn_everywhere.md
+[easily compose, control scheduling]: ./compose_control_scheduling.md
+[generic code that is portable across runtimes]: ./portable_generic_code.md
+[use current runtime without generics]: ./use_current_runtime.md
+[easy to understand what is happening]: ./easy_to_understand.md
+[easily produce iterators]: ./easily_produce_iterators.md
+[getting started in async rust is easy]: ./getting_started.md
