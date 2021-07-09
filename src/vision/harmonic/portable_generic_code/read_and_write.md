@@ -153,3 +153,7 @@ trait AsyncBidirectional: AsyncRead + AsyncWrite {
     async fn split(&mut self) -> (impl AsyncRead + '_, impl AsyncWrite + '_)
 }
 ```
+
+## Variant D: Implement the `AsyncRead` and `AsyncWrite` traits for `&T`
+
+In `std`, [there are `Read` and `Write` impls for `&File`](https://doc.rust-lang.org/std/fs/struct.File.html#impl-Read-1), and [the async-std runtime has followed suit](https://docs.rs/async-std/1.9.0/async_std/fs/struct.File.html#impl-Read-1). This means that you can express "can do both `AsyncRead + AsyncWrite`" as `AsyncRead + AsyncWrite + Copy`, more or less, or other similar tricks. However, it's not possible to do this for _any type_. Worth exploring.
