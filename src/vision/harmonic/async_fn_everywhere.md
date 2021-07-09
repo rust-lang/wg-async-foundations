@@ -1,0 +1,1 @@
+# Use async fn everywhere
