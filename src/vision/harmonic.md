@@ -4,7 +4,7 @@ This page is a **work in progress**. It represents a complete vision for where w
 
 ## Certainty levels
 
-- 💯 -- Implemented and stable
+- 🌈 -- Implemented and stable
 - 🌞 -- Everything is looking good
 - 🌤️ -- Still some stuff to figure out, but unlikely to see major changes in the design
 - 🌥️ -- Got one or two solid leads, but still have to figure out if it will work
