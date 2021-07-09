@@ -24,9 +24,7 @@ assert_eq!(result, 22);
 
 ## Side-stepping the nested await problem
 
-One goal of scopes is to avoid the "nested await" problem, as described in [Barbara battles buffered streams (BBBS)][bbbs]. The idea is like this: the standard combinators which run work "in the background" and which give access to intermediate results should take a scope parameter (see the note below about no-std or embedded environments). Some examples from today's APIs are `FuturesUnordered` and `Stream::buffered`. (Combinators like `join` are distinct, because they don't give access to intermediate results; similarly `race` is distinct because of [cancellation](./cancellation.md)).
-
--- i.e., initiates concurrency -- needs to take a scope parameter. The way to get concurrency, in other words, is to spawn into a scope, and not to construct small "subschedulers". This includes `FuturesUnordered` and `Stream::buffered`, but also more familiar APIs like `r`. By doing this, we ensure that the scheduler is able to poll those concurrent tasks even while the main task is busy doing something else. A good rule of thumb here is that _only the scheduler ever invokes poll_. **All other code just "awaits" things.**[^hard]
+One goal of scopes is to avoid the "nested await" problem, as described in [Barbara battles buffered streams (BBBS)][bbbs]. The idea is like this: the standard combinators which run work "in the background" and which give access to intermediate results should take a scope parameter and spawn that work using scopes[^hard]. Some examples from today's APIs are `FuturesUnordered` and `Stream::buffered`.
 
 [^hard]: This is not a hard rule. But invoking poll manually is best regarded as a risky thing to be managed with care -- not only because of the formal safety guarantees, but because of the possibility for "nested await"-style failures.
 
@@ -48,36 +46,20 @@ async fn do_work(database: &Database) {
 }
 ```
 
-The `join` combinator would likely be replaced with a method on `scope`:[^variadic]
+### Concurrency without scopes: Join, select, race, and friends
 
-[^variadic]: Naturally we would want a variadic variation, or perhaps a method macro.
+It is possible to introduce concurrency in ways that both (a) do not require scopes and (b) avoid the "nested await" problem. Any combinator which takes multiple `Async` instances and polls them to completion (or cancels them) before it itself returns is ok. This includes:
 
-```rust
-let (a_result, b_result) = scope.join(a, b).await;
-```
+- `join`, because the `join(a, b)` doesn't complete until both `a` and `b` have completed;
+- `select`, because selecting will cancel the alternatives that are not chosen;
+- `race`, which is a variant of select.
 
-This join method would be defined like so:
+This is important because embedded systems often avoid allocators, and the scope API implicitly requires allocation (one can spawn an unbounded number of tasks).
 
-```rust
-impl Scope<'s> {
-    async fn join<A, B>(&mut self, a: A, b: B) -> (A::Output, B::Output)
-    where
-        A: Async + 's,
-        B: Async + 's,
-    {
-        (self.spawn(a).await, b.await)
-    }
-}
-```
-
-## Could there be a convenient way to access the current scope?
+### Could there be a convenient way to access the current scope?
 
 If we wanted to integrate the idea of scopes more deeply, we could have some way to get access to the current scope and reference its lifetime. Let's imagine we added a keyword `scope`, and we said that its lifetime is `'scope`. One would then be able to do something like the following:
 
 Lots of unknowns to work out here, though. For example, suppose you have a function that creates a scope and invokes a closure within. Do we have a way to indicate to the closure that `'scope` in that closure may be different?
 
 It starts to feel like simply passing "scope" values may be simpler, and perhaps we need a way to automate the threading of state instead. Another advantage of passing a `scope` explicitly is that it is clear when parallel tasks may be launched.
-
-## What about embedded?
-
-The scope APIs are not especially suitable for embedded environments. Their structure assumes
