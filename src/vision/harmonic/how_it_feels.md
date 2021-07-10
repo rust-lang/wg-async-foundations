@@ -28,6 +28,8 @@ Using Rust means most things work and perform well by default, but of course it 
 
 ## Flexible: "I can do all the weird things"
 
+Part of what's great about Rust is that it lets you get into explore all the corner cases. Want to target the kernel? Develop embedded systems using async networking without any operating system? Run on WebAssembly? No problem, we can do that.
+
 ## Interoperable: "integrating with C++, node.js, and GCD is easy"
 
 Much like C, Rust aims to be a "lingua franca", something you can integrate into your existing systems on a piecemeal basis. In synchronous Rust, this means that functions can "speak" the C ABI and Rust structures can be compiled with C-compatible layouts, and that we use native system functionality like the default memory allocator or the native threading APIs. In _asynchronous_ Rust, it means that we are able to integrate into other systems, like C++ futures, Grand Central Dispatch, or JavaScript promises.
